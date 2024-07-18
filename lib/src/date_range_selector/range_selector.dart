@@ -1,10 +1,10 @@
 library date_range_selector;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-
-import 'dart:math' as math;
 
 import '../calendar_view/calendar_view.dart';
 
@@ -24,6 +24,8 @@ class RangeSelector extends StatefulWidget {
   final TextStyle? headerTextStyle;
   final CalendarColorScheme? colorScheme;
   final BottomBarBuilder? bottomBar;
+  final DateTime? startDate;
+  final DateTime? endDate;
   const RangeSelector({
     super.key,
     this.width = 520,
@@ -33,6 +35,8 @@ class RangeSelector extends StatefulWidget {
     this.headerTextStyle,
     this.colorScheme,
     this.bottomBar,
+    this.startDate,
+    this.endDate,
   });
 
   @override
@@ -43,10 +47,12 @@ class _RangeSelectorState extends State<RangeSelector> {
   late double maxWidth;
   late double calendarViewWidth;
 
-  final RangeSelectorLogic logic = RangeSelectorLogic();
+  late RangeSelectorLogic logic;
 
   @override
   void initState() {
+    logic = RangeSelectorLogic(
+        startDate: widget.startDate, endDate: widget.endDate);
     maxWidth = widget.width + widget.spacing + (widget.crossAxisPadding * 2);
     calendarViewWidth = widget.width / 2;
     super.initState();
@@ -152,7 +158,7 @@ class _RangeSelectorState extends State<RangeSelector> {
     required CalendarViewController controller,
     required ValueNotifier<String> notifier,
   }) {
-    return Container(
+    return SizedBox(
       height: 42,
       width: calendarViewWidth,
       child: Row(

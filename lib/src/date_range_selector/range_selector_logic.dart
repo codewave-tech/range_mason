@@ -1,16 +1,9 @@
 part of date_range_selector;
 
 class RangeSelectorLogic {
-  final CalendarViewController startController = CalendarViewController(
-    enableRangeSelectionMode: true,
-    initialFocusDifferenceMonths: -1,
-    id: 'start',
-  );
+  late CalendarViewController startController;
 
-  final CalendarViewController endController = CalendarViewController(
-    enableRangeSelectionMode: true,
-    id: 'end',
-  );
+  late CalendarViewController endController;
 
   late ValueNotifier<String> startCalendarDate;
   late ValueNotifier<String> endCalendarDate;
@@ -18,7 +11,19 @@ class RangeSelectorLogic {
   DateTime? startRange;
   DateTime? endRange;
 
-  RangeSelectorLogic() {
+  RangeSelectorLogic({DateTime? startDate, DateTime? endDate}) {
+    startController = CalendarViewController(
+      enableRangeSelectionMode: true,
+      initialFocusDifferenceMonths: -1,
+      id: 'start',
+      startDate: startDate,
+    );
+    endController = CalendarViewController(
+      enableRangeSelectionMode: true,
+      id: 'end',
+      startDate: startDate,
+      endDate: endDate,
+    );
     startCalendarDate =
         ValueNotifier<String>(_format(startController.displayDate!));
     endCalendarDate =

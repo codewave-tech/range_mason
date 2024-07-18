@@ -222,6 +222,10 @@ class CalendarViewController {
       return CalendarViewWidgets.selectedDate(calendarElemet);
     }
 
+    if (dateTime.month != _displayMonth.month) {
+      return CalendarViewWidgets.isLeadingOrTrailingElement(calendarElemet);
+    }
+
     if (!_rangeSelectionMode && _isEqual(dateTime, _selectableHover)) {
       return CalendarViewWidgets.selectedDate(
         calendarElemet,
